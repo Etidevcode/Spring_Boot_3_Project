@@ -1,5 +1,6 @@
 package com.etidevcode.jobportal.repository;
 
+
 import com.etidevcode.jobportal.entity.JobPostActivity;
 import com.etidevcode.jobportal.entity.JobSeekerProfile;
 import com.etidevcode.jobportal.entity.JobSeekerSave;
@@ -11,7 +12,8 @@ import java.util.List;
 @Repository
 public interface JobSeekerSaveRepository extends JpaRepository<JobSeekerSave, Integer> {
 
-	List<JobSeekerSave> findByUserId(JobSeekerProfile userAccountId);
-	List<JobSeekerSave> findByJob(JobPostActivity job);
+    public List<JobSeekerSave> findByUserId(JobSeekerProfile userAccountId);
+
+    List<JobSeekerSave> findByJob(JobPostActivity job);
 
 }

@@ -2,21 +2,21 @@ package com.etidevcode.jobportal.entity;
 
 public interface IRecruiterJobs {
 
-	Long getTotalCandidates();
+    Long getTotalCandidates();
 
-	int getJob_post_id();
+    int getJob_post_id();
 
-	String getJob_title();
+    String getJob_title();
 
-	int getLocationId();
+    int getLocationId();
 
-	String getCity();
+    String getCity();
 
-	String getState();
+    String getState();
 
-	String getCountry();
+    String getCountry();
 
-	int getCompanyId();
+    int getCompanyId();
 
-	String getName();
+    String getName();
 }

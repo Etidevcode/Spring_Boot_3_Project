@@ -1,5 +1,6 @@
 package com.etidevcode.jobportal.services;
 
+
 import com.etidevcode.jobportal.entity.JobPostActivity;
 import com.etidevcode.jobportal.entity.JobSeekerApply;
 import com.etidevcode.jobportal.entity.JobSeekerProfile;
@@ -12,18 +13,22 @@ import java.util.List;
 @Service
 public class JobSeekerApplyService {
 
-	private final JobSeekerApplyRepository jobSeekerApplyRepository;
+    private final JobSeekerApplyRepository jobSeekerApplyRepository;
 
-	@Autowired
-	public JobSeekerApplyService(JobSeekerApplyRepository jobSeekerApplyRepository) {
-		this.jobSeekerApplyRepository = jobSeekerApplyRepository;
-	}
+    @Autowired
+    public JobSeekerApplyService(JobSeekerApplyRepository jobSeekerApplyRepository) {
+        this.jobSeekerApplyRepository = jobSeekerApplyRepository;
+    }
 
-	public List<JobSeekerApply> getCandidatesJobs(JobSeekerProfile userAccountId){
-		return jobSeekerApplyRepository.findByUserId(userAccountId);
-	}
+    public List<JobSeekerApply> getCandidatesJobs(JobSeekerProfile userAccountId) {
+        return jobSeekerApplyRepository.findByUserId(userAccountId);
+    }
 
-	public List<JobSeekerApply> getJobCandidates(JobPostActivity job){
-		return jobSeekerApplyRepository.findByJob(job);
-	}
+    public List<JobSeekerApply> getJobCandidates(JobPostActivity job) {
+        return jobSeekerApplyRepository.findByJob(job);
+    }
+
+    public void addNew(JobSeekerApply jobSeekerApply) {
+        jobSeekerApplyRepository.save(jobSeekerApply);
+    }
 }

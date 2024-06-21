@@ -21,63 +21,78 @@ import java.util.Date;
 @Service
 public class UsersService {
 
-	private final UsersRepository usersRepository;
-	private final JobSeekerProfileRepository jobSeekerProfileRepository;
-	private final RecruiterProfileRepository recruiterProfileRepository;
-	private final PasswordEncoder passwordEncoder;
+    private final UsersRepository usersRepository;
+    private final JobSeekerProfileRepository jobSeekerProfileRepository;
+    private final RecruiterProfileRepository recruiterProfileRepository;
+    private final PasswordEncoder passwordEncoder;
 
-	@Autowired
-	public UsersService(UsersRepository usersRepository,
-						JobSeekerProfileRepository jobSeekerProfileRepository,
-						RecruiterProfileRepository recruiterProfileRepository,
-						PasswordEncoder passwordEncoder) {
-		this.usersRepository = usersRepository;
-		this.jobSeekerProfileRepository = jobSeekerProfileRepository;
-		this.recruiterProfileRepository = recruiterProfileRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
+    @Autowired
+    public UsersService(UsersRepository usersRepository, JobSeekerProfileRepository jobSeekerProfileRepository, RecruiterProfileRepository recruiterProfileRepository, PasswordEncoder passwordEncoder) {
+        this.usersRepository = usersRepository;
+        this.jobSeekerProfileRepository = jobSeekerProfileRepository;
+        this.recruiterProfileRepository = recruiterProfileRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-	public Users addNew(Users users){
-		users.setActive(true);
-		users.setRegistrationDate(new Date(System.currentTimeMillis()));
-		users.setPassword(passwordEncoder.encode(users.getPassword()));
-		Users savedUser = usersRepository.save(users);
-		int userTypeId = users.getUserTypeId().getUserTypeId();
-		if (userTypeId == 1){
-			recruiterProfileRepository.save(new RecruiterProfile(savedUser));
-		} else {
-			jobSeekerProfileRepository.save(new JobSeekerProfile(savedUser));
-		}
-		return savedUser;
-	}
+    public Users addNew(Users users) {
+        users.setActive(true);
+        users.setRegistrationDate(new Date(System.currentTimeMillis()));
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
+        Users savedUser = usersRepository.save(users);
+        int userTypeId = users.getUserTypeId().getUserTypeId();
 
-	public Object getCurrentUserProfile() {
+        if (userTypeId == 1) {
+            recruiterProfileRepository.save(new RecruiterProfile(savedUser));
+        }
+        else {
+            jobSeekerProfileRepository.save(new JobSeekerProfile(savedUser));
+        }
 
-		Authentication authentication  = SecurityContextHolder.getContext().getAuthentication();
+        return savedUser;
+    }
 
-		if (!(authentication instanceof AnonymousAuthenticationToken)){
-			String username = authentication.getName();
-			Users users = usersRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Could not found " + "user"));
-			int userId = users.getUserId();
-			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("Recruiter"))) {
-				RecruiterProfile recruiterProfile = recruiterProfileRepository.findById(userId).orElse(new RecruiterProfile());
-				return recruiterProfile;
-			} else {
-				JobSeekerProfile jobSeekerProfile = jobSeekerProfileRepository.findById(userId).orElse(new JobSeekerProfile());
-				return jobSeekerProfile;
-			}
-		}
-		return null;
-	}
+    public Object getCurrentUserProfile() {
 
-	public Users getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		 if (!(authentication instanceof  AnonymousAuthenticationToken)){
-			 String username = authentication.getName();
-			 Users user = usersRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Could not found " + "user"));
-			return user;
-		 }
-		 return null;
-	}
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            Users users = usersRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("Could not found " + "user"));
+            int userId = users.getUserId();
+            if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("Recruiter"))) {
+                RecruiterProfile recruiterProfile = recruiterProfileRepository.findById(userId).orElse(new RecruiterProfile());
+                return recruiterProfile;
+            } else {
+                JobSeekerProfile jobSeekerProfile = jobSeekerProfileRepository.findById(userId).orElse(new JobSeekerProfile());
+                return jobSeekerProfile;
+            }
+        }
+
+        return null;
+    }
+
+    public Users getCurrentUser() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            Users user = usersRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Could not found " + "user"));
+            return user;
+        }
+
+        return null;
+    }
+
+    public Users findByEmail(String currentUsername) {
+        return usersRepository.findByEmail(currentUsername).orElseThrow(() -> new UsernameNotFoundException("User not " +
+                "found"));
+    }
 }
+
+
+
+
+
+
+
+

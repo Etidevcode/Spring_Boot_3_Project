@@ -1,6 +1,5 @@
 package com.etidevcode.jobportal.entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,65 +8,63 @@ import jakarta.persistence.Id;
 @Entity
 public class JobLocation {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	private String city;
+    private String city;
+    private String state;
+    private String country;
 
-	private String state;
+    public JobLocation() {
+    }
 
-	private String country;
+    public JobLocation(Integer id, String city, String state, String country) {
+        this.id = id;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+    }
 
-	public JobLocation() {
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public JobLocation(Integer id, String state, String city, String country) {
-		Id = id;
-		this.state = state;
-		this.city = city;
-		this.country = country;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getId() {
-		return Id;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setId(Integer id) {
-		Id = id;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getState() {
+        return state;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	@Override
-	public String toString() {
-		return "JobLocation{" +
-				"Id=" + Id +
-				", city='" + city + '\'' +
-				", state='" + state + '\'' +
-				", country='" + country + '\'' +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "JobLocation{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }

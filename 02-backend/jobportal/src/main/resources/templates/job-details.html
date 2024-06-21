@@ -65,7 +65,7 @@
                 >
             </li>
             <li class="nav-item ">
-                <a sec:authorize="hasAuthority('Recruiter')" class="nav-link" th:href="@{/recruiter_profile/}"
+                <a sec:authorize="hasAuthority('Recruiter')" class="nav-link" th:href="@{/recruiter-profile/}"
                 > <i class="fa-solid fa-pencil"></i>Edit Account</a
                 >
             </li>
@@ -132,6 +132,8 @@
                 <label class="large-label "> Job Description </label>
                 <div th:utext="${jobDetails.descriptionOfJob}"></div>
             </div>
+
+
 
             <div class="px-3 mb-3" sec:authorize="hasAuthority('Recruiter')">
                 <div class="row">

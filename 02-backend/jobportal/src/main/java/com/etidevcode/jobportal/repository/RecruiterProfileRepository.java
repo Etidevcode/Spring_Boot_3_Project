@@ -1,5 +1,6 @@
 package com.etidevcode.jobportal.repository;
 
+
 import com.etidevcode.jobportal.entity.RecruiterProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
